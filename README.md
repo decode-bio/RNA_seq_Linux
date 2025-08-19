@@ -4,7 +4,7 @@ This repository is created to document the step by step process of RNA Sequencin
 * fasterq-dump
 * fastqc
 * Trimmomatic
-* HISAT2
+* Bowtie2
 * Samtools
 * featurecount
 * DESeq2
@@ -37,9 +37,15 @@ Before Trimming
 After Trimming
 <img width="1919" height="973" alt="image" src="https://github.com/user-attachments/assets/f2e70411-d107-4a87-a7fe-5af677259808" />
 
-On comparing both the Qualities, I have decided to proceed with original sequence as our sequence length have reduced which will create the possibilities to align with genome at multiple sites. Also our Hisat 2 aligner anyway softclip the adapters.
+On comparing both the Qualities, I have decided to proceed with original sequence as our sequence length have reduced which will create the possibilities to align with genome at multiple sites. Also our aligner anyway softclip the adapters.
 
-# Hisat2 Alignement
+# bowtie2 Alignement
+The MTB genome is downloaded and indexed beforehand to align the sequence.
+```
+bowtie2 -q -x /home/sne_desh/Ref/MTB/mtb_index -U SRR34030217.fastq -S aligned.sam
+```
+<img width="595" height="178" alt="image" src="https://github.com/user-attachments/assets/c59af847-7204-4867-b494-00cfdb347fff" />
+
 
 
 
