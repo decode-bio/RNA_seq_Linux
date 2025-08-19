@@ -4,7 +4,7 @@ This repository is created to document the step by step process of RNA Sequencin
 * fasterq-dump
 * fastqc
 * Trimmomatic
-* Bowtie2
+* Hisat2
 * Samtools
 * featurecount
 * DESeq2
@@ -39,12 +39,44 @@ After Trimming
 
 On comparing both the Qualities, I have decided to proceed with original sequence as our sequence length have reduced which will create the possibilities to align with genome at multiple sites. Also our aligner anyway softclip the adapters.
 
-# bowtie2 Alignement
-The MTB genome is downloaded and indexed beforehand to align the sequence.
+# HISAT2 Alignement
+The MTB (Mycobacterium Tuberculosis) genome is downloaded and indexed beforehand to align the sequence.
 ```
-bowtie2 -q -x /home/sne_desh/Ref/MTB/mtb_index -U SRR34030217.fastq -S aligned.sam
+/usr/bin/hisat2 -q -x /home/sne_desh/HISAT2/MTB/mtb_index -U SRR34030217.fastq -S aligned.sam
 ```
-<img width="595" height="178" alt="image" src="https://github.com/user-attachments/assets/c59af847-7204-4867-b494-00cfdb347fff" />
+<img width="1225" height="171" alt="image" src="https://github.com/user-attachments/assets/35deae10-04dc-4f1e-8cb8-573b96f745eb" />
+96.68 % is our overall alignment rate.
+
+# .Sam to .bam conversion and sorting
+* sam to bam conversion
+```
+samtools view -b -S aligned.sam > aligned_unsorted.bam
+```
+* sorting
+```
+samtools sort -o aligned_sorted.bam aligned_unsorted.bam
+```
+* Indexing
+```
+samtools index aligned_sorted.bam
+```
+
+# Quantification using featureCounts
+```
+featureCounts -T 8 -a /home/sne_desh/HISAT2/MTB/genomic.gtf -o final.txt aligned_sorted.bam
+```
+<img width="980" height="254" alt="image" src="https://github.com/user-attachments/assets/34b45bd8-2d31-4063-9db9-432e4eb9a9e7" />
+
+<img width="1125" height="970" alt="image" src="https://github.com/user-attachments/assets/e29c8398-e1e4-4992-b14a-933448380a33" />
+
+So we have 37.5 % aligned reads.
+
+Lets check our final.txt file
+```
+cat final.txt | less
+```
+<img width="880" height="940" alt="image" src="https://github.com/user-attachments/assets/ff3099f8-9d4b-467a-9514-3fc9917d4288" />
+
 
 
 
