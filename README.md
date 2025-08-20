@@ -77,6 +77,20 @@ cat final.txt | less
 ```
 <img width="880" height="940" alt="image" src="https://github.com/user-attachments/assets/ff3099f8-9d4b-467a-9514-3fc9917d4288" />
 
+Lets see our final.txt.summary file
+```
+cat final.txt.summary
+```
+<img width="824" height="389" alt="image" src="https://github.com/user-attachments/assets/f8faabdb-b267-4002-8b2f-7cbf444f6a23" />
+
+# conversion from txt to .csv
+We can also install pandas to convert the .txt file into .csv but here I am using the following in-built command.
+```
+cat final.txt | tr '\t' ',' > read_counts.csv
+```
+<img width="693" height="586" alt="image" src="https://github.com/user-attachments/assets/023ada06-435f-4024-974f-1ea100a0dd52" />
+
+# DEseq
 
 
 
